@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
-import { Grid, Paper, Button } from "@material-ui/core";
+import { Grid, Paper } from "@material-ui/core";
 import "./App.css";
 import BigNumber from "bignumber.js";
 import { MyContract } from "../Contracts/ContractInstance";

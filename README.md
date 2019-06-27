@@ -17,6 +17,11 @@ Simulation of a Blockchain based Voting to achieve transparency.
 3) Turn privacy setting off for Metamask in order to let React capture wallet address.
 4) Install create-react-app ``` npm install -g create-react-app ```
 
+# To Start the application
+1) Clone the repository
+2) cd to the directory where u clone the repository and run npm install command to install dependencies
+3) npm start , it should open a browser at port 3000 if not in use
+
 # Misc
 1) Contract is deployed on ropsten testnet at 0xbcae574d3386cd940649248e057cbcc2e4944502. 
 2) To Test it on Remix IDE, copy the solidity source code under /src/Contracts and paste it into Remix. Compile and choose Deploy at address option

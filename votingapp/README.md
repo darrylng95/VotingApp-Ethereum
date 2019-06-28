@@ -1,1 +1,1 @@
-# Restruct of program
+# Restructure of program

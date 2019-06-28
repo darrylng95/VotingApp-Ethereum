@@ -1,9 +1,18 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
+
 import { Grid, Paper } from "@material-ui/core";
 import "./App.css";
 import BigNumber from "bignumber.js";
 import { MyContract } from "../contracts/ContractInstance";
+//Component
+import Home from '../components/Home';
+import Voter from '../components/voter/Voter';
+import Proposal from '../components/proposal/Proposal';
+import Outcome from '../components/outcome/Outcome';
+// layout
+import Navbar from '../common/layout/navbar';
+
 /* Phase 2 -- Setting Up and Interacting with React */
 class App extends Component {
   constructor(props) {
@@ -51,7 +60,6 @@ class App extends Component {
     this.handleCheckExpiry = this.handleCheckExpiry.bind(this);
     this.handleCastVote = this.handleCastVote.bind(this);
     this.handleGetOutCome = this.handleGetOutCome.bind(this);
-    this.getProposalDetails = this.getProposalDetails.bind(this);
   }
 
   /* Phase 2 */
@@ -192,22 +200,6 @@ class App extends Component {
     });
   }
 
-  getProposalDetails(event) {
-    event.preventDefault();
-    const { getProposalDetails } = this.state.ContractInstance;
-    const { proposalId: pId } = this.state;
-    getProposalDetails.call(pId, (err, result) => {
-      console.log("Getting Proposals");
-      console.log(result);
-      let pTV = BigNumber(result[2]).toNumber();
-      this.setState({
-        currentPname: result[0],
-        currentPdes: result[1],
-        pTotalVotes: pTV,
-        pState: result[3]
-      });
-    });
-  }
 
   querySecretMsg() {
     const { getSecretMsg } = this.state.ContractInstance;
@@ -222,54 +214,18 @@ class App extends Component {
     this.querySecretMsg();
 
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title"> React & Ethereum Voting Application </h1>
+      <div>
+        <BrowserRouter>
+        <Navbar/>
           <p>Your account: {window.web3.eth.accounts[0]} </p>
-        </header>
 
-        {/* Phase 2 */}
-        <br />
+        <Switch>
+          <Route exact path="/" component ={Home}/>
+          <Route exact path="/voter" component ={Voter}/>
+          <Route exact path="/proposal" component ={Proposal}/>
+          <Route exact path="/outcome" component ={Outcome}/>
+        </Switch>
 
-        <Grid container spacing={3}>
-          <Grid item xs={4} />
-          <Grid item xs={4}>
-            <Paper style={{ border: "1px solid black" }}>
-              <h3>Get Proposal Details </h3>
-              <form onSubmit={this.getProposalDetails}>
-                <input
-                  type="number"
-                  name="string-change"
-                  placeholder="Enter proposal id..."
-                  value={this.state.proposalId}
-                  onChange={event =>
-                    this.setState({ proposalId: event.target.value })
-                  }
-                />
-                <br />
-                <button
-                  style={{
-                    borderRadius: "12px",
-                    backgroundColor: "black",
-                    color: "white"
-                  }}
-                  type="submit"
-                >
-                  {" "}
-                  Query Proposal{" "}
-                </button>
-                <br />
-                <p>Proposal Name: {this.state.currentPname} </p>
-                <p>Proposal Description: {this.state.currentPdes} </p>
-                <p>
-                  Proposal Total Votes Registered: {this.state.pTotalVotes}{" "}
-                </p>
-                <p>Proposal Current State: {this.state.pState} </p>
-              </form>
-            </Paper>
-          </Grid>
-        </Grid>
         {/* register voter */}
         <br />
 
@@ -535,6 +491,7 @@ class App extends Component {
             </Grid>
           </Grid>
         </Grid>
+        </BrowserRouter>
       </div>
     );
   }

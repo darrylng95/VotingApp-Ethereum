@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
-
-import { Grid, Paper } from "@material-ui/core";
 import "./App.css";
-import BigNumber from "bignumber.js";
 import { MyContract } from "../contracts/ContractInstance";
 //Component
-import Home from '../components/Home';
-import Voter from '../components/voter/Voter';
-import Proposal from '../components/proposal/Proposal';
-import Outcome from '../components/outcome/Outcome';
+import Home from "../components/Home";
+import Voter from "../components/voter/Voter";
+import Proposal from "../components/proposal/Proposal";
+import Outcome from "../components/outcome/Outcome";
 // layout
-import Navbar from '../common/layout/navbar';
+import Navbar from "../common/layout/navbar";
 
 /* Phase 2 -- Setting Up and Interacting with React */
 class App extends Component {
@@ -25,26 +22,11 @@ class App extends Component {
       /* Edit this with each iteration of Smart Contract */
       /* Note: this adress is a placeholder and will not work */
       ContractInstance: MyContract.at(
-        "0xbcae574d3386cd940649248e057cbcc2e4944502"
+        "0x70e04a748f434708d946dd6fe9ba60d2523f3833"
       ),
       /* Phase 3 -- Smart Contract Manipulation */
       contractState: "",
-      numVotes: "",
-      userId: "",
-      proposalId: "",
-      shares: "",
-      proposalName: "",
-      proposalDescription: "",
-      proposalQuorum: "",
-      proposalTTL: "",
-      outcome: "",
-      state: "",
-      yesVote: "",
-      noVote: "",
-      currentPname: "",
-      currentPdes: "",
-      pTotalVotes: "",
-      pState: ""
+  
     };
 
     /* Phase 2 */
@@ -54,12 +36,6 @@ class App extends Component {
     this.handleContractStringSubmit = this.handleContractStringSubmit.bind(
       this
     );
-    this.handleRegisterVoter = this.handleRegisterVoter.bind(this);
-    this.handleCreateProposal = this.handleCreateProposal.bind(this);
-    this.handleCalculateTotalVote = this.handleCalculateTotalVote.bind(this);
-    this.handleCheckExpiry = this.handleCheckExpiry.bind(this);
-    this.handleCastVote = this.handleCastVote.bind(this);
-    this.handleGetOutCome = this.handleGetOutCome.bind(this);
   }
 
   /* Phase 2 */
@@ -93,114 +69,6 @@ class App extends Component {
     );
   }
 
-  //functions
-  //register voters
-  handleRegisterVoter(event) {
-    event.preventDefault();
-    const { registerVoters } = this.state.ContractInstance;
-
-    const { shares: newShares } = this.state;
-    registerVoters(
-      newShares,
-      {
-        gas: 300000,
-        from: window.web3.eth.accounts[0],
-        value: window.web3.toWei(0.02, "ether")
-      },
-      (err, result) => {
-        console.log("Registering voters!");
-        //console.log(result);
-      }
-    );
-  }
-
-  handleCreateProposal(event) {
-    event.preventDefault();
-    const { createNewProposal } = this.state.ContractInstance;
-    const {
-      proposalName: pName,
-      proposalDescription: pDes,
-      proposalQuorum: pQuorum,
-      proposalTTL: pTTL
-    } = this.state;
-
-    createNewProposal(
-      pName,
-      pDes,
-      pQuorum,
-      pTTL,
-      {
-        gas: 300000,
-        from: window.web3.eth.accounts[0],
-        value: window.web3.toWei(0.02, "ether")
-      },
-      (err, result) => {
-        console.log("Creating new proposal!");
-        //console.log(result);
-      }
-    );
-  }
-
-  handleCalculateTotalVote(event) {
-    event.preventDefault();
-    const { calculateTotalVotes } = this.state.ContractInstance;
-    const { proposalId: pId } = this.state;
-
-    calculateTotalVotes(pId, (err, result) => {
-      console.log("Calculating total votes that registered to proposal!");
-      //console.log(result);
-    });
-  }
-
-  handleCastVote(event) {
-    event.preventDefault();
-    const { castVoteForProposal } = this.state.ContractInstance;
-    const { numVotes: numVotes, userId: uId, proposalId: pid } = this.state;
-    castVoteForProposal(numVotes, uId, pid, (err, result) => {
-      if (err) {
-        alert(
-          "Something went wrong! Perhaps voter casted votes already! Or Proposal is completed!"
-        );
-      }
-      console.log("Casting votes for proposal!");
-      //console.log(result);
-    });
-  }
-
-  handleCheckExpiry(event) {
-    event.preventDefault();
-    const { checkExpiry } = this.state.ContractInstance;
-    const { proposalId: pId } = this.state;
-
-    checkExpiry(pId, (err, result) => {
-      console.log("Checking expiry for proposal!");
-      //console.log(result);
-    });
-  }
-
-  handleGetOutCome(event) {
-    event.preventDefault();
-    const { getOutcome } = this.state.ContractInstance;
-    const { proposalId: pId } = this.state;
-    getOutcome.call(pId, (err, result) => {
-      console.log("Checking expiry for proposal!");
-      console.log(result);
-      if (err) {
-        alert("Something went wrong! Probably proposal expired!");
-      } else {
-        let bignum1 = BigNumber(result[2]).toNumber();
-        let bignum2 = BigNumber(result[3]).toNumber();
-        this.setState({
-          outcome: result[0],
-          state: result[1],
-          yesVote: bignum1,
-          noVote: bignum2
-        });
-      }
-    });
-  }
-
-
   querySecretMsg() {
     const { getSecretMsg } = this.state.ContractInstance;
 
@@ -214,283 +82,17 @@ class App extends Component {
     this.querySecretMsg();
 
     return (
-      <div>
+      <div style = {{ minHeight:"100vh", backgroundColor:"#A9A9A9"}}>
         <BrowserRouter>
-        <Navbar/>
-          <p>Your account: {window.web3.eth.accounts[0]} </p>
+          <Navbar />
+          <p align="center" style={{color:"#800080"}}>Your account: {window.web3.eth.accounts[0]} </p>
 
-        <Switch>
-          <Route exact path="/" component ={Home}/>
-          <Route exact path="/voter" component ={Voter}/>
-          <Route exact path="/proposal" component ={Proposal}/>
-          <Route exact path="/outcome" component ={Outcome}/>
-        </Switch>
-
-        {/* register voter */}
-        <br />
-
-        <Grid container spacing={3}>
-          <Grid item xs={4} />
-          <Grid item xs={4}>
-            <Paper style={{ border: "1px solid blue" }}>
-              <h2>Register Voter </h2>
-              <form onSubmit={this.handleRegisterVoter}>
-                <input
-                  type="number"
-                  name="register-voter"
-                  placeholder="Enter voter shares..."
-                  value={this.state.shares}
-                  onChange={event =>
-                    this.setState({ shares: event.target.value })
-                  }
-                />
-
-                <br />
-                <button
-                  style={{
-                    borderRadius: "12px",
-                    backgroundColor: "blue",
-                    color: "white"
-                  }}
-                  type="submit"
-                >
-                  {" "}
-                  Register Voter{" "}
-                </button>
-              </form>
-            </Paper>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={3}>
-          <Grid item xs={4} />
-          <Grid item xs={4}>
-            <Paper style={{ border: "1px solid black" }}>
-              <br />
-              <h2>Create Proposal </h2>
-              <form onSubmit={this.handleCreateProposal}>
-                <input
-                  type="text"
-                  name="proposal-name"
-                  placeholder="Enter proposal name..."
-                  value={this.state.proposalName}
-                  onChange={event =>
-                    this.setState({ proposalName: event.target.value })
-                  }
-                />
-                <br />
-                <input
-                  type="text"
-                  name="proposal-description"
-                  placeholder="Enter proposal description..."
-                  value={this.state.proposalDescription}
-                  onChange={event =>
-                    this.setState({ proposalDescription: event.target.value })
-                  }
-                />
-                <br />
-                <input
-                  type="number"
-                  name="proposal-quorum"
-                  placeholder="Enter proposal quroum..."
-                  value={this.state.proposalQuorum}
-                  onChange={event =>
-                    this.setState({ proposalQuorum: event.target.value })
-                  }
-                />
-                <br />
-                <input
-                  type="number"
-                  name="proposal-ttl"
-                  placeholder="Enter proposal ttl..."
-                  value={this.state.proposalTTL}
-                  onChange={event =>
-                    this.setState({ proposalTTL: event.target.value })
-                  }
-                />
-                <br />
-                <button
-                  style={{
-                    borderRadius: "12px",
-                    backgroundColor: "black",
-                    color: "white"
-                  }}
-                  type="submit"
-                >
-                  {" "}
-                  Create new Proposal{" "}
-                </button>
-              </form>
-              <p>
-                {" "}
-                <br />{" "}
-              </p>
-            </Paper>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={3}>
-          <Grid item xs={4} />
-          <Grid item xs={4}>
-            <Paper style={{ border: "1px solid blue" }}>
-              <br />
-              <h2>Calculate total vote </h2>
-              <form onSubmit={this.handleCalculateTotalVote}>
-                <input
-                  type="number"
-                  name="calculate votes registered to proposal"
-                  placeholder="Enter proposal id..."
-                  value={this.state.proposalId}
-                  onChange={event =>
-                    this.setState({ proposalId: event.target.value })
-                  }
-                />
-                <br />
-                <button
-                  style={{
-                    borderRadius: "12px",
-                    backgroundColor: "blue",
-                    color: "white"
-                  }}
-                  type="submit"
-                >
-                  {" "}
-                  Calculate votes registered to propose{" "}
-                </button>
-              </form>
-            </Paper>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={3}>
-          <Grid item xs={4} />
-          <Grid item xs={4}>
-            <Paper style={{ border: "1px solid black" }}>
-              <br />
-              <h2>Cast vote </h2>
-              <form onSubmit={this.handleCastVote}>
-                <input
-                  type="number"
-                  name="Cast-votes"
-                  placeholder="Enter votes to cast..."
-                  value={this.state.numVotes}
-                  onChange={event =>
-                    this.setState({ numVotes: event.target.value })
-                  }
-                />
-                <br />
-                <input
-                  type="number"
-                  name="Cast-votes-pId"
-                  placeholder="Enter proposal id to cast votes..."
-                  value={this.state.proposalId}
-                  onChange={event =>
-                    this.setState({ proposalId: event.target.value })
-                  }
-                />
-                <br />
-                <input
-                  type="number"
-                  name="Cast-votes-uId"
-                  placeholder="Enter user id to cast..."
-                  value={this.state.userId}
-                  onChange={event =>
-                    this.setState({ userId: event.target.value })
-                  }
-                />
-                <br />
-                <button
-                  style={{
-                    borderRadius: "12px",
-                    backgroundColor: "black",
-                    color: "white"
-                  }}
-                  type="submit"
-                >
-                  {" "}
-                  Cast Vote for proposal{" "}
-                </button>
-              </form>
-              <p>
-                {" "}
-                <br />{" "}
-              </p>
-            </Paper>
-          </Grid>
-        </Grid>
-
-        <br />
-        <Grid container spacing={3}>
-          <Grid item xs={4} />
-          <Grid item xs={4}>
-            <Paper style={{ border: "1px solid blue" }}>
-              <h2>Check proposal expiry </h2>
-              <p>Please check expiry for proposal before getting outcome!! </p>
-              <form onSubmit={this.handleCheckExpiry}>
-                <input
-                  type="number"
-                  name="Checking expiry date"
-                  placeholder="Enter proposal id..."
-                  value={this.state.proposalId}
-                  onChange={event =>
-                    this.setState({ proposalId: event.target.value })
-                  }
-                />
-                <br />
-                <button
-                  style={{
-                    borderRadius: "12px",
-                    backgroundColor: "blue",
-                    color: "white"
-                  }}
-                  id="expiry"
-                  type="submit"
-                >
-                  {" "}
-                  Check Expiry{" "}
-                </button>
-              </form>
-              <br />
-            </Paper>
-          </Grid>
-
-          <Grid container spacing={3}>
-            <Grid item xs={4} />
-            <Grid item xs={4}>
-              <Paper style={{ border: "1px solid black" }}>
-                <h2>Get Proposal Outcome </h2>
-                <form onSubmit={this.handleGetOutCome}>
-                  <input
-                    type="number"
-                    name="Get Outcome for proposal"
-                    placeholder="Enter proposal id..."
-                    value={this.state.proposalId}
-                    onChange={event =>
-                      this.setState({ proposalId: event.target.value })
-                    }
-                  />
-                  <br />
-                  <button
-                    style={{
-                      borderRadius: "12px",
-                      backgroundColor: "black",
-                      color: "white"
-                    }}
-                    type="submit"
-                  >
-                    Get Outcome for proposal{" "}
-                  </button>
-                </form>
-                <br />
-                <p>Outcome is: {this.state.outcome} </p>
-                <p>S∏tate is: {this.state.state} </p>
-
-                <p>Yes Votes is: {this.state.yesVote} </p>
-                <p>No Votes: {this.state.noVote} </p>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Grid>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/voter" component={Voter} />
+            <Route exact path="/proposal" component={Proposal} />
+            <Route exact path="/outcome" component={Outcome} />
+          </Switch>
         </BrowserRouter>
       </div>
     );

@@ -25,6 +25,12 @@ export default class TabsButton extends Component {
             component={Link}
             to="/outcome"
           />
+          <Tab
+            label="Home"
+            style={{ color: "#ad1e22" }}
+            component={Link}
+            to="/"
+          />
         </Tabs>
       </div>
     );

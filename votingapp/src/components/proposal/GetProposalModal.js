@@ -17,7 +17,7 @@ import { If, Else } from "rc-if-else";
 class GetProposalModal extends Component {
   state = {
     ContractInstance: MyContract.at(
-      "0xbcae574d3386cd940649248e057cbcc2e4944502"
+      "0x70e04a748f434708d946dd6fe9ba60d2523f3833"
     ),
     proposalId: "",
     proposalName: "",
@@ -48,7 +48,6 @@ class GetProposalModal extends Component {
     });
   };
   render() {
-    console.log("Pid", this.state.proposalId);
     return (
       <div>
         <Popup

@@ -23,7 +23,7 @@ Simulation of a Blockchain based Voting to achieve transparency.
 3) npm start , it should open a browser at port 3000 if not in use
 
 # Misc
-1) Contract is deployed on ropsten testnet at 0xbcae574d3386cd940649248e057cbcc2e4944502. 
+1) Contract is deployed on ropsten testnet at 0x70e04a748f434708d946dd6fe9ba60d2523f3833. 
 2) To Test it on Remix IDE, copy the solidity source code under /src/Contracts and paste it into Remix. Compile and choose Deploy at address option
 
 

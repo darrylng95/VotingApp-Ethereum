@@ -25,5 +25,6 @@ Simulation of a Blockchain based Voting to achieve transparency.
 # Misc
 1) Contract is deployed on ropsten testnet at 0xbcae574d3386cd940649248e057cbcc2e4944502. 
 2) To Test it on Remix IDE, copy the solidity source code under /src/Contracts and paste it into Remix. Compile and choose Deploy at address option
+3) Updated version please head to ComponentBasedImplementation Branch
 
 

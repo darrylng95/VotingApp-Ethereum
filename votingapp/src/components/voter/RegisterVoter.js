@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 // Contract Details
 import { MyContract } from "../../contracts/ContractInstance";
-import { If } from "rc-if-else";
 
 import {
   Button,
@@ -9,10 +8,7 @@ import {
   TextField,
   CardHeader,
   Card,
-  CardContent,
-  Grid,
-  Paper,
-  Typography
+  CardContent
 } from "@material-ui/core";
 
 export default class RegisterVoter extends Component {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { MyContract } from "../../contracts/ContractInstance";
 import { If } from "rc-if-else";
-import { Button, TextField, Paper, Box } from "@material-ui/core";
+import { Button, TextField, Box } from "@material-ui/core";
 
 export default class CalculateTotalVote extends Component {
   state = {

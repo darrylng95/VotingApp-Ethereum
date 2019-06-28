@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { MyContract } from "../../contracts/ContractInstance";
 import { If } from "rc-if-else";
-import { Button, TextField, Paper, Box } from "@material-ui/core";
+import { Button, TextField, Box } from "@material-ui/core";
 
 export default class CheckProposalExpiry extends Component {
   state = {
@@ -12,18 +12,18 @@ export default class CheckProposalExpiry extends Component {
     checkExpiryFlag: false
   };
 
-  handleCheckExpiry = (pId) => {
+  handleCheckExpiry = pId => {
     const { checkExpiry } = this.state.ContractInstance;
 
     checkExpiry(pId, (err, result) => {
       console.log("Checking expiry for proposal!");
       //console.log(result);
     });
-  }
+  };
 
-  proposalIdHandler = (event) => {
+  proposalIdHandler = event => {
     this.setState({ proposalId: event.target.value });
-  }
+  };
   render() {
     return (
       <div>
@@ -35,24 +35,31 @@ export default class CheckProposalExpiry extends Component {
           Check Expiry
         </Button>
         <If condition={this.state.checkExpiryFlag}>
-            <br/><br/>
-          <Box height ={150} width="100%">
+          <br />
+          <br />
+          <Box height={150} width="100%">
             <TextField
               label="Proposal Id"
               type="number"
               fullWidth
               onChange={this.proposalIdHandler}
-              value = {this.state.proposalId}
+              value={this.state.proposalId}
               margin="normal"
               variant="filled"
             />
-            <Button variant = "contained" color = "secondary"
-            onClick = {() => this.handleCheckExpiry(this.state.proposalId)}
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => this.handleCheckExpiry(this.state.proposalId)}
             >
-                CHECK
-            </Button> {" "}
-            <Button variant = "contained" color = "primary" onClick = {() => this.setState({checkExpiryFlag:false})}>
-                HIDE
+              CHECK
+            </Button>{" "}
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => this.setState({ checkExpiryFlag: false })}
+            >
+              HIDE
             </Button>
           </Box>
         </If>

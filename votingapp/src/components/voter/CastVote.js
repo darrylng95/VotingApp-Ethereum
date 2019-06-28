@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 // Contract Details
 import { MyContract } from "../../contracts/ContractInstance";
-import { If } from "rc-if-else";
 
 import {
   Button,
@@ -9,10 +8,7 @@ import {
   TextField,
   CardHeader,
   Card,
-  CardContent,
-  Grid,
-  Paper,
-  Typography
+  CardContent
 } from "@material-ui/core";
 
 export default class CastVote extends Component {
@@ -21,35 +17,39 @@ export default class CastVote extends Component {
       "0x70e04a748f434708d946dd6fe9ba60d2523f3833"
     ),
     votes: "",
-    proposalId : "",
-    userId: "",
+    proposalId: "",
+    userId: ""
   };
-  onChangeVoteHandler = (event) => {
-      this.setState({votes:event.target.value})
-  }
+  onChangeVoteHandler = event => {
+    this.setState({ votes: event.target.value });
+  };
 
-  onChangeProposalIdHandler = (event) => {
-    this.setState({proposalId:event.target.value})
-}
+  onChangeProposalIdHandler = event => {
+    this.setState({ proposalId: event.target.value });
+  };
 
-onChangeUserIdHandler = (event) => {
-    this.setState({userId:event.target.value})
-}
+  onChangeUserIdHandler = event => {
+    this.setState({ userId: event.target.value });
+  };
 
-
-handleCastVote = () => {
+  handleCastVote = () => {
     const { castVoteForProposal } = this.state.ContractInstance;
-    castVoteForProposal(this.state.votes, this.state.userId, this.state.proposalId, (err, result) => {
-      if (err) {
-        alert(
-          "Something went wrong! Perhaps voter casted votes already! Or Proposal is completed!"
-        );
+    castVoteForProposal(
+      this.state.votes,
+      this.state.userId,
+      this.state.proposalId,
+      (err, result) => {
+        if (err) {
+          alert(
+            "Something went wrong! Perhaps voter casted votes already! Or Proposal is completed!"
+          );
+        }
+        if (result) alert("Please wait for metamask confirmation!");
+        console.log("Casting votes for proposal!");
+        //console.log(result);
       }
-      if(result) alert("Please wait for metamask confirmation!")
-      console.log("Casting votes for proposal!");
-      //console.log(result);
-    });
-  }
+    );
+  };
 
   render() {
     return (

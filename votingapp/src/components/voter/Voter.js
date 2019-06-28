@@ -12,7 +12,11 @@ export default class Voter extends Component {
   render() {
     return (
       <div>
-        <p align="center"><b><u>Voter Menu</u></b></p>
+        <p align="center">
+          <b>
+            <u>Voter Menu</u>
+          </b>
+        </p>
         <Grid container spacing={1}>
           <Grid item xs={1}>
             {" "}
@@ -39,23 +43,40 @@ export default class Voter extends Component {
         </Grid>
         <If condition={this.state.registervoteFlag}>
           <RegisterVote />
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => this.setState({ registervoteFlag: false })}
-          >
-            HIDE
-          </Button>
+          <Grid container spacing={2}>
+            <Grid item xs={0}>
+              {" "}
+            </Grid>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => this.setState({ registervoteFlag: false })}
+            >
+              HIDE
+            </Button>
+          </Grid>
+
+          <br />
+          <br />
+          <Divider />
         </If>
         <If condition={this.state.castvoteFlag}>
           <CastVote />
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => this.setState({ castvoteFlag: false })}
-          >
-            HIDE
-          </Button>
+          <Grid container spacing={2}>
+            <Grid item xs={0}>
+              {" "}
+            </Grid>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => this.setState({ castvoteFlag: false })}
+            >
+              HIDE
+            </Button>
+          </Grid>
+          <br />
+          <br />
+          <Divider />
         </If>
       </div>
     );

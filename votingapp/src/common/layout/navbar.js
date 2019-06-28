@@ -3,14 +3,12 @@ import { Link } from "react-router-dom";
 import clsx from "clsx";
 //import "./Header.css";
 //component
-import TabsButton from './TabsButton';
+import TabsButton from "./TabsButton";
 // styles
 import {
   AppBar,
   Toolbar,
   IconButton,
-  Tab,
-  Tabs,
   Drawer,
   List,
   ListItem,
@@ -95,7 +93,7 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
-  },
+  }
 }));
 
 function Header() {
@@ -196,8 +194,8 @@ function Header() {
           {/* opens side menu */}
         </Toolbar>
       </AppBar>
-      <TabsButton/>
-      <Divider/>
+      <TabsButton />
+      <Divider />
     </div>
   );
 }

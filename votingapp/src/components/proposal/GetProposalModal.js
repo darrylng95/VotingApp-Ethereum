@@ -8,11 +8,10 @@ import {
   Typography,
   TextField,
   Grid,
-  Divider,
-  LinearProgress
+  Divider
 } from "@material-ui/core";
 import Popup from "reactjs-popup";
-import { If, Else } from "rc-if-else";
+import { If} from "rc-if-else";
 
 class GetProposalModal extends Component {
   state = {

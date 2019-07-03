@@ -80,7 +80,7 @@ class App extends Component {
 
   render() {
     this.querySecretMsg();
-
+    console.log("ENV", process.env.REACT_APP_TEST)
     return (
       <div style = {{ minHeight:"100vh", backgroundColor:"#A9A9A9"}}>
         <BrowserRouter>

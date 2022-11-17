@@ -11,7 +11,7 @@
     "fs": "0.0.1-security",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-scripts": "1.0.14",
+    "react-scripts": "5.0.1",
     "web3": "^1.0.0-beta.55",
     "web3-net": "^1.0.0-beta.36"
   },
